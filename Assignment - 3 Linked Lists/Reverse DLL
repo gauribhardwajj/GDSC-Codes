@@ -1,0 +1,29 @@
+struct Node* reverseDLL(struct Node * head)
+{
+    
+    if(head==NULL || head->next==NULL) return head;
+    
+    struct Node* q= head;
+    struct Node* p= head;
+    
+    while(p && p->next){
+        p=p->next;
+    }
+    
+    //p rests at the last node of DLL
+    //q rests at the first node of DLL
+    
+    while(q!=p && p->next!=q){
+        
+        //swap values
+        
+        int temp= p->data;
+        p->data= q->data;
+        q->data= temp;
+        
+        q= q->next;
+        p= p->prev;
+    }
+    
+    return head;
+}
