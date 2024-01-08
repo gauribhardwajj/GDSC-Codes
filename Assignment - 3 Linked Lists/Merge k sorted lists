@@ -1,0 +1,44 @@
+ListNode* mergeKLists(vector<ListNode*>& lists) {
+
+        if(lists.size()==0) return NULL; //no lists
+        return mergeList(lists, 0, lists.size()-1);
+    }
+
+    ListNode* mergeList(vector<ListNode*>& lists, int start, int end){
+        if (start == end) { // only 1 list
+            return lists[start];
+        }
+        if (start + 1 == end) { // two lists
+            return merge(lists[start], lists[end]);
+        }
+        int mid = start + (end - start) / 2;
+        ListNode* left = mergeList(lists, start, mid);
+        ListNode* right = mergeList(lists, mid + 1, end);
+        return merge(left, right);
+    }
+
+    ListNode* merge(ListNode* l1, ListNode* l2){
+        ListNode* dummy= new ListNode(0);
+        ListNode* curr= dummy;
+
+        while(l1 && l2){
+            if(l1->val<= l2->val){
+                curr->next= l1;
+                l1=l1->next;
+                curr= curr->next;
+            }
+            else{
+                curr->next= l2;
+                l2= l2->next;
+                curr= curr->next;
+            }
+        }
+
+        if(l1){
+            curr->next= l1;
+        }
+
+        if(l2) curr->next= l2;
+
+        return dummy->next;
+    }
